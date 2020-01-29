@@ -1,20 +1,11 @@
-import java.util.*;
-import java.io.*;
+import carrental.Data;
 
-public class Car {
-	private String carNumber;
-	private String carType, carModel, carColor;
+public class Car extends Data {
+	private String carType, carModel, carNumber, carColor;
 	private double carPrice;
+	private boolean status = false;
 
-	public Car() {
-		carNumber = "";
-		carType = "";
-		carModel = "";
-		carColor = "";
-		carPrice = 0;
-	}
-
-	public void setCar(String cN, String cT, String cM, String cC, double cP){
+	public Car( String cT, String cM, String cN, String cC, double cP) {
 		carNumber = cN;
 		carType = cT;
 		carModel = cM;
@@ -22,6 +13,10 @@ public class Car {
 		carPrice = cP;
 	}
 
+	public boolean isCarStatus() {
+		return status;
+	}
+	
 	public String getCarNumber() {
 		return carNumber;
 	}
@@ -38,8 +33,8 @@ public class Car {
 		return carColor;
 	}
 
-	public String getCar() {
-		return getCarNumber() + " : " + getCarType() + " " + getCarColor() + " " + getCarModel();
+	public String getData() {
+		return getCarNumber() + " " + getCarType() + " " + getCarColor() + " " + getCarModel();
 	}
 
 	public double getCarPrice() {

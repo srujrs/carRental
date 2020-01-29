@@ -1,24 +1,16 @@
-import java.util.*;
-import java.io.*;
-
 public class User {
-	private String Name, userName, contact, emailId;
+	private String name, userName, contact, emailId, password;
 
-	public User() {
-		Name = "";
-		userName = "";
-		contact = "";
-		emailId = "";
-	}
-
-	public void setUser(String N, String c, String eI){
-		Name = N;
+	public User(String N, String c, String eI, String pa) {
+		name = N;
 		contact = c;
 		emailId = eI;
+		password = pa;
+		userName = name.substring(0, 3) + contact.substring(7, 10);
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public String getUserName() {
@@ -31,5 +23,9 @@ public class User {
 
 	public String getEmailId() {
 		return emailId;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 }
