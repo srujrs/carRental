@@ -2,15 +2,16 @@ import carrental.Data;
 
 public class Car extends Data {
 	private String carType, carModel, carNumber, carColor;
-	private double carPrice;
-	private boolean status = false;
+	private int carPrice;
+	private boolean status;
 
-	public Car( String cT, String cM, String cN, String cC, double cP) {
+	public Car( String cT, String cM, String cN, String cC, int cP) {
 		carNumber = cN;
 		carType = cT;
 		carModel = cM;
 		carColor = cC;
 		carPrice = cP;
+		status = false;
 	}
 
 	public boolean isCarStatus() {
@@ -37,7 +38,7 @@ public class Car extends Data {
 		return getCarNumber() + " " + getCarType() + " " + getCarColor() + " " + getCarModel();
 	}
 
-	public double getCarPrice() {
+	public int getCarPrice() {
 		return carPrice;
 	}
 }

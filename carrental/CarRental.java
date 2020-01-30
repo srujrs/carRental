@@ -17,12 +17,12 @@ public class CarRental {
         userList.add(user2);
         userList.add(user3);
         
-        Car car1 = new Car("mini","ritz","MH09-54321","white",9.00);
-        Car car2 = new Car("mini","i10","MH04-76387","red",9.00);
-        Car car3 = new Car("micro","indica","MH06-13485","white",11.00);
-        Car car4 = new Car("micro","etios","MH05-92135","white",11.00);
-        Car car5 = new Car("sedan","city","MH03-87438","black",15.00);
-        Car car6 = new Car("sedan","dzire","MH03-87438","black",15.00);
+        Car car1 = new Car("mini","ritz","MH09-54321","white",9);
+        Car car2 = new Car("mini","i10","MH04-76387","red",9);
+        Car car3 = new Car("micro","indica","MH06-13485","white",11);
+        Car car4 = new Car("micro","etios","MH05-92135","white",11);
+        Car car5 = new Car("sedan","city","MH03-87438","black",15);
+        Car car6 = new Car("sedan","dzire","MH03-87438","black",15);
         carList.add(car1);
         carList.add(car2);
         carList.add(car3);
@@ -39,44 +39,47 @@ public class CarRental {
         driverList.add(driver3);
         driverList.add(driver4);
        
-        
-        System.out.println("Press 1 for Login (or) Press 2 for Registration");
         Scanner sc = new Scanner(System.in);
-        short choice = 1;
-    	choice = sc.nextShort();
-        while(choice!=0) {
-                switch(choice)
-                {
-                        case 1: System.out.println("Login Menu");
-                                System.out.println("Enter user ID : ");
-                                String id = sc.next();
-                                System.out.println("Enter password : ");
-                                String password = sc.next();
-                                int val = loginMethod(id,password,userList);
-                                if(val==-1) {
-                                	System.out.println("Invalid credentials, Try again!");
-                                }
-                                else {
-                                	System.out.println("Login successful!");
-                                }
-                                booking(val,userList,carList,driverList);
-                                choice = 0;
-                                break;
-                        case 2: System.out.println("Registration Menu");
-		                        System.out.println("Enter name : ");
-		                        String na = sc.next();
-		                        System.out.println("Enter mobile-No : ");
-		                        String con = sc.next();
-		                        System.out.println("Enter email-Id : ");
-		                        String emI = sc.next();
-		                        System.out.println("Enter password : ");
-		                        String pass = sc.next();
-		                        registrationMethod(na,con,emI,pass,userList);
-		                        choice = 1;
-                                break;
-                        default: System.out.println("Invalid Choice!");
-                }
-        }
+        short choice;
+        do {
+        	System.out.println("Press 1 for Login (or) Press 2 for Registration");           
+        	choice = sc.nextShort();
+            while(choice!=0) {
+                    switch(choice)
+                    {
+                            case 1: System.out.println("Login Menu");
+                                    System.out.println("Enter user ID : ");
+                                    String id = sc.next();
+                                    System.out.println("Enter password : ");
+                                    String password = sc.next();
+                                    int val = loginMethod(id,password,userList);
+                                    if(val==-1) {
+                                    	System.out.println("Invalid credentials, Try again!");
+                                    }
+                                    else {
+                                    	System.out.println("Login successful!");
+                                    	booking(val,userList,carList,driverList);
+                                        choice = 0;
+                                    }                               
+                                    break;
+                            case 2: System.out.println("Registration Menu");
+    		                        System.out.println("Enter name : ");
+    		                        String na = sc.next();
+    		                        System.out.println("Enter mobile-No : ");
+    		                        String con = sc.next();
+    		                        System.out.println("Enter email-Id : ");
+    		                        String emI = sc.next();
+    		                        System.out.println("Enter password : ");
+    		                        String pass = sc.next();
+    		                        registrationMethod(na,con,emI,pass,userList);
+    		                        choice = 1;
+                                    break;
+                            default: System.out.println("Invalid Choice!");
+                    }
+            }
+            System.out.println("Press 1 for new booking or 2 to quit : ");
+            choice = sc.nextShort();         
+        } while(choice==1);  
         sc.close();
     }
 
@@ -114,28 +117,41 @@ public class CarRental {
 			System.out.println("Enter intermediate location : ");
 			via = sc.next();
 		}
-		System.out.println("Press 1 for mini or 2 for micro or 3 for sedan : ");
+		System.out.println("Press 1 for mini(ritz,i10) or 2 for micro(indica,etios) or 3 for sedan(dzire,city) : ");
 		choice = sc.nextInt();
-		int i;
+		int i = 0;
+		int choice1;
 		String carDetails = "";
 		String driverDetails = "";
 		switch(choice) {
-				case 1 : for(i=0;i<2;++i) 
-					     	if(carList.get(i).isCarStatus()==false) 
+				case 1 : System.out.println("Press 1 for ritz or 2 for i10 : ");
+						 choice1 = sc.nextInt();
+						 for(i=0;i<2;++i) 
+					     	if(carList.get(i).isCarStatus()==false && ) {
 					     		carDetails = carList.get(i).getData();
+					     		break;
+					     	}					     		
+						 break;
 					     
 				case 2 : for(i=2;i<4;++i) 
-					     	if(carList.get(i).isCarStatus()==false) 
-					     		carDetails = carList.get(i).getData();	 
+					     	if(carList.get(i).isCarStatus()==false) {
+					     		carDetails = carList.get(i).getData();
+					     		break;
+					     	}				     			 
+						 break;
 					     
 				case 3 : for(i=4;i<6;++i) 
-					     	if(carList.get(i).isCarStatus()==false) 
-					     		carDetails = carList.get(i).getData();						
+					     	if(carList.get(i).isCarStatus()==false) {
+					     		carDetails = carList.get(i).getData();
+					     		break;
+					     	}					     				
+						 break;
 		}
 		
 		if(carDetails=="")
 	    	 System.out.println("No cars available at the moment!");
 		else {
+			int price = carList.get(i).getCarPrice();
 			for(i=0;i<driverList.size();++i) 
 		    	 if(driverList.get(i).isStatus()==false)
 		    		 driverDetails = driverList.get(i).getData();
@@ -147,8 +163,12 @@ public class CarRental {
 		    	 System.out.println("Going to : " + dL);
 		    	 if(via!="None") 
 		    		 System.out.println("Via : " + via);
+		    	 float distance = Math.round(((Math.random() * 15)*10)/10 + 1);
+		    	 System.out.println("Distance : " + distance + "km");
 		    	 System.out.println("Car : " + carDetails);
 		    	 System.out.println("Driver : " + driverDetails);
+		         price = (int) (price * distance);
+		         System.out.println("Fare price : Rs" + price);
 		    	 System.out.println("Press 1 to confirm booking or 2 to cancel : ");
 		    	 choice = sc.nextInt();
 		    	 sc.close();
