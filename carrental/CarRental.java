@@ -1,10 +1,13 @@
 import java.util.*;
+import carrental.WellThread;
 import java.lang.String;
 
 public class CarRental {
 	
     public static void main(String[] args) {
-        System.out.println("Welcome to the CarRental System");
+        Thread t1 = new Thread(new WellThread());
+        t1.start();
+        t1.interrupt();
         
         ArrayList<User> userList = new ArrayList<User>();
         ArrayList<Car> carList = new ArrayList<Car>();
