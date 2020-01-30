@@ -58,7 +58,7 @@ public class CarRental {
                                     }
                                     else {
                                     	System.out.println("Login successful!");
-                                    	booking(val,userList,carList,driverList);
+                                    	booking(val,userList,carList,driverList,sc);
                                         choice = 0;
                                     }                               
                                     break;
@@ -78,7 +78,7 @@ public class CarRental {
                     }
             }
             System.out.println("Press 1 for new booking or 2 to quit : ");
-            choice = sc.nextShort();         
+            choice = sc.nextShort(); 
         } while(choice==1);  
         sc.close();
     }
@@ -104,9 +104,8 @@ public class CarRental {
 		userList.add(user4);
 	}
 	
-	private static void booking(int index, ArrayList<User> userList,ArrayList<Car> carList, ArrayList<Driver> driverList) {
+	private static void booking(int index, ArrayList<User> userList, ArrayList<Car> carList, ArrayList<Driver> driverList, Scanner sc) {
 		System.out.println("Enter pick-up location : ");
-		Scanner sc = new Scanner(System.in);
 		String pL = sc.next();	
 		System.out.println("Enter drop-location : ");
 		String dL = sc.next();
@@ -119,39 +118,56 @@ public class CarRental {
 		}
 		System.out.println("Press 1 for mini(ritz,i10) or 2 for micro(indica,etios) or 3 for sedan(dzire,city) : ");
 		choice = sc.nextInt();
-		int i = 0;
-		int choice1;
+		int choice1 = 0,i,price = 0,decision;
 		String carDetails = "";
 		String driverDetails = "";
 		switch(choice) {
-				case 1 : System.out.println("Press 1 for ritz or 2 for i10 : ");
-						 choice1 = sc.nextInt();
-						 for(i=0;i<2;++i) 
-					     	if(carList.get(i).isCarStatus()==false && ) {
-					     		carDetails = carList.get(i).getData();
-					     		break;
-					     	}					     		
-						 break;
-					     
-				case 2 : for(i=2;i<4;++i) 
-					     	if(carList.get(i).isCarStatus()==false) {
-					     		carDetails = carList.get(i).getData();
-					     		break;
-					     	}				     			 
-						 break;
-					     
-				case 3 : for(i=4;i<6;++i) 
-					     	if(carList.get(i).isCarStatus()==false) {
-					     		carDetails = carList.get(i).getData();
-					     		break;
-					     	}					     				
-						 break;
+        case 1 : System.out.println("Press 1 for ritz or 2 for i10 : ");
+             choice1 = sc.nextInt();
+              if(choice1 == 1 && carList.get(0).isCarStatus() == false)
+              {
+                carDetails = carList.get(0).getData();
+                price = carList.get(0).getCarPrice();
+              }
+              else if(choice1 == 2 && carList.get(1).isCarStatus() == false)
+              {
+                carDetails = carList.get(1).getData();
+                price = carList.get(1).getCarPrice();
+              }         
+             break;
+               
+        case 2 : System.out.println("Press 1 for indica or 2 for etios : ");
+             choice1 = sc.nextInt();
+             if(choice1 == 1 && carList.get(2).isCarStatus() == false)
+             {
+                carDetails = carList.get(2).getData();
+                price = carList.get(2).getCarPrice();
+             }
+             else if(choice1 == 2 && carList.get(3).isCarStatus() == false)
+             {
+                carDetails = carList.get(3).getData();
+                price = carList.get(3).getCarPrice();
+             }               
+             break;
+               
+        case 3 : System.out.println("Press 1 for city or 2 for dzire : ");
+             choice1 = sc.nextInt();
+             if(choice1 == 1 && carList.get(4).isCarStatus() == false)
+             {
+                carDetails = carList.get(4).getData();
+                price = carList.get(4).getCarPrice();
+             }
+             else if(choice1 == 2 && carList.get(5).isCarStatus() == false)
+             {
+                carDetails = carList.get(5).getData();
+                price = carList.get(5).getCarPrice();
+             }             
+             break;
 		}
 		
 		if(carDetails=="")
 	    	 System.out.println("No cars available at the moment!");
 		else {
-			int price = carList.get(i).getCarPrice();
 			for(i=0;i<driverList.size();++i) 
 		    	 if(driverList.get(i).isStatus()==false)
 		    		 driverDetails = driverList.get(i).getData();
@@ -170,10 +186,12 @@ public class CarRental {
 		         price = (int) (price * distance);
 		         System.out.println("Fare price : Rs" + price);
 		    	 System.out.println("Press 1 to confirm booking or 2 to cancel : ");
-		    	 choice = sc.nextInt();
-		    	 sc.close();
-		    	 if(choice==1) 
+		    	 decision = sc.nextInt();
+		    	 if(decision==1) {
 		    		 System.out.println("Booking confirmed and details sent to " + userList.get(index).getEmailId());
+		    		 driverList.get(i).setStatus(true);
+		    		 carList.get((choice-1)*2 + (choice1 - 1)).setStatus(true);
+		    	 }		    		 
 		    	 else 
 		    		 System.out.println("Booking cancelled!");						    	 
 		     } 

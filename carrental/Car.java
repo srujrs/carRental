@@ -41,4 +41,8 @@ public class Car extends Data {
 	public int getCarPrice() {
 		return carPrice;
 	}
+	
+	public void setStatus(boolean b) {
+		status = b;
+	}
 }
