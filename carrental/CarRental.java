@@ -1,52 +1,65 @@
 import java.util.*;
-import carrental.WellThread;
 import java.lang.String;
 
-public class CarRental {
+public class CarRental implements Runnable{
+	
+	static ArrayList<User> userList = new ArrayList<User>();
+    static ArrayList<Car> carList = new ArrayList<Car>();
+    static ArrayList<Driver> driverList = new ArrayList<Driver>();
+    
+    public void run() {
+    	try {
+    		User user1 = new User("Srujan","9876543210","srj123@gmail.com","pass123");
+            User user2 = new User("Sagar","9876543210","sgr456@gmail.com","pass456");
+            User user3 = new User("Omkar","9876543210","om789@gmail.com","pass789");
+            userList.add(user1);
+            userList.add(user2);
+            userList.add(user3);
+            
+            Car car1 = new Car("mini","indica","MH09-54321","white",15);
+            Car car2 = new Car("mini","etios","MH04-76387","red",15);
+            Car car3 = new Car("micro","ritz","MH06-13485","white",12);
+            Car car4 = new Car("micro","i10","MH05-92135","white",12);
+            Car car5 = new Car("sedan","city","MH03-87438","black",20);
+            Car car6 = new Car("sedan","dzire","MH03-87438","black",20);
+            carList.add(car1);
+            carList.add(car2);
+            carList.add(car3);
+            carList.add(car4);
+            carList.add(car5);
+            carList.add(car6);
+            
+            Driver driver1 = new Driver("Satish","6873452210","DL5473264",4.2);
+            Driver driver2 = new Driver("Sameer","6873457230","DL5734687",4.5);
+            Driver driver3 = new Driver("Pramod","6873458899","DL4327634",3.9);
+            Driver driver4 = new Driver("Amit","6873432423","DL3463532",4.6);
+            driverList.add(driver1);
+            driverList.add(driver2);
+            driverList.add(driver3);
+            driverList.add(driver4);
+            
+            System.out.println("Data loaded!");
+    	} catch(Exception e) {}
+    }
 	
     public static void main(String[] args) {
-        Thread t1 = new Thread(new WellThread());
-        t1.start();
-        t1.interrupt();
-        
-        ArrayList<User> userList = new ArrayList<User>();
-        ArrayList<Car> carList = new ArrayList<Car>();
-        ArrayList<Driver> driverList = new ArrayList<Driver>();
-        
-        User user1 = new User("Srujan","9876543210","srj123@gmail.com","pass123");
-        User user2 = new User("Sagar","9876543210","sgr456@gmail.com","pass456");
-        User user3 = new User("Omkar","9876543210","om789@gmail.com","pass789");
-        userList.add(user1);
-        userList.add(user2);
-        userList.add(user3);
-        
-        Car car1 = new Car("mini","ritz","MH09-54321","white",9);
-        Car car2 = new Car("mini","i10","MH04-76387","red",9);
-        Car car3 = new Car("micro","indica","MH06-13485","white",11);
-        Car car4 = new Car("micro","etios","MH05-92135","white",11);
-        Car car5 = new Car("sedan","city","MH03-87438","black",15);
-        Car car6 = new Car("sedan","dzire","MH03-87438","black",15);
-        carList.add(car1);
-        carList.add(car2);
-        carList.add(car3);
-        carList.add(car4);
-        carList.add(car5);
-        carList.add(car6);
-        
-        Driver driver1 = new Driver("Satish","6873452210","DL5473264",4.2);
-        Driver driver2 = new Driver("Sameer","6873457230","DL5734687",4.5);
-        Driver driver3 = new Driver("Pramod","6873458899","DL4327634",3.9);
-        Driver driver4 = new Driver("Amit","6873432423","DL3463532",4.6);
-        driverList.add(driver1);
-        driverList.add(driver2);
-        driverList.add(driver3);
-        driverList.add(driver4);
-       
+        Thread childThread = new Thread(new CarRental());
+        childThread.start();
+    	
+        System.out.println("Welcome to the CarRental System");
+  
         Scanner sc = new Scanner(System.in);
-        short choice;
-        do {
-        	System.out.println("Press 1 for Login (or) Press 2 for Registration");           
-        	choice = sc.nextShort();
+        short choice = 0;
+        do {     
+        	do {
+        	    try {
+        	    	System.out.println("Press 1 for Login (or) Press 2 for Registration");
+        	        choice = sc.nextShort();
+        	    } catch (InputMismatchException e) {
+        	        System.out.println("Invalid choice!");
+        	    }
+        	    sc.nextLine(); // clears the buffer
+        	} while (choice!=1 && choice!=2);
             while(choice!=0) {
                     switch(choice)
                     {
@@ -80,7 +93,16 @@ public class CarRental {
                             default: System.out.println("Invalid Choice!");
                     }
             }
-            System.out.println("Press 1 for new booking or 2 to quit : ");
+            
+            do {
+        	    try {
+        	    	System.out.println("Press 1 for new booking or 2 to quit : ");
+        	        choice = sc.nextShort();
+        	    } catch (InputMismatchException e) {
+        	        System.out.println("Invalid choice!");
+        	    }
+        	    sc.nextLine(); // clears the buffer
+            } while (choice!=1 && choice!=2);
             choice = sc.nextShort(); 
         } while(choice==1);  
         sc.close();
@@ -111,22 +133,44 @@ public class CarRental {
 		System.out.println("Enter pick-up location : ");
 		String pL = sc.next();	
 		System.out.println("Enter drop-location : ");
-		String dL = sc.next();
-		System.out.println("Press 1 for intermediate stop or 2 for no stop : ");
-		int choice = sc.nextInt();
+		String dL = sc.next();		
+		int choice = 0;
+		do {
+    	    try {
+    	    	System.out.println("Press 1 for intermediate stop or 2 for no stop : ");
+    	    	choice = sc.nextInt();
+    	    } catch (InputMismatchException e) {
+    	        System.out.println("Invalid choice!");
+    	    }
+    	    sc.nextLine(); // clears the buffer
+        } while (choice!=1 && choice!=2);
 		String via = "None";
 		if(choice==1) {
 			System.out.println("Enter intermediate location : ");
 			via = sc.next();
 		}
-		System.out.println("Press 1 for mini(ritz,i10) or 2 for micro(indica,etios) or 3 for sedan(dzire,city) : ");
-		choice = sc.nextInt();
-		int choice1 = 0,i,price = 0,decision;
+		do {
+    	    try {
+    	    	System.out.println("Press 1 for mini(indica,etios) or 2 for micro(ritz,i10) or 3 for sedan(dzire,city) : ");
+    	    	choice = sc.nextInt();
+    	    } catch (InputMismatchException e) {
+    	        System.out.println("Invalid choice!");
+    	    }
+    	    sc.nextLine(); // clears the buffer
+        } while (choice!=1 && choice!=2 && choice!=3);		
+		int choice1 = 0,i,price = 0,decision = 0;
 		String carDetails = "";
 		String driverDetails = "";
 		switch(choice) {
-        case 1 : System.out.println("Press 1 for ritz or 2 for i10 : ");
-             choice1 = sc.nextInt();
+			case 1 : do {
+         	    try {
+         	    	System.out.println("Press 1 for indica or 2 for etios : ");
+         	    	choice1 = sc.nextInt();
+         	    } catch (InputMismatchException e) {
+         	        System.out.println("Invalid choice!");
+         	    }
+         	    sc.nextLine(); // clears the buffer
+             } while (choice1!=1 && choice1!=2);	
               if(choice1 == 1 && carList.get(0).isCarStatus() == false)
               {
                 carDetails = carList.get(0).getData();
@@ -139,8 +183,16 @@ public class CarRental {
               }         
              break;
                
-        case 2 : System.out.println("Press 1 for indica or 2 for etios : ");
-             choice1 = sc.nextInt();
+        case 2 : 
+        do {
+     	    try {
+     	    	System.out.println("Press 1 for ritz or 2 for i10 : ");
+     	    	choice1 = sc.nextInt();
+     	    } catch (InputMismatchException e) {
+     	        System.out.println("Invalid choice!");
+     	    }
+     	    sc.nextLine(); // clears the buffer
+         } while (choice1!=1 && choice1!=2);	
              if(choice1 == 1 && carList.get(2).isCarStatus() == false)
              {
                 carDetails = carList.get(2).getData();
@@ -153,8 +205,16 @@ public class CarRental {
              }               
              break;
                
-        case 3 : System.out.println("Press 1 for city or 2 for dzire : ");
-             choice1 = sc.nextInt();
+        case 3 : 
+        do {
+     	    try {
+     	    	System.out.println("Press 1 for city or 2 for dzire : ");
+     	    	choice1 = sc.nextInt();
+     	    } catch (InputMismatchException e) {
+     	        System.out.println("Invalid choice!");
+     	    }
+     	    sc.nextLine(); // clears the buffer
+         } while (choice1!=1 && choice1!=2);
              if(choice1 == 1 && carList.get(4).isCarStatus() == false)
              {
                 carDetails = carList.get(4).getData();
@@ -172,8 +232,11 @@ public class CarRental {
 	    	 System.out.println("No cars available at the moment!");
 		else {
 			for(i=0;i<driverList.size();++i) 
-		    	 if(driverList.get(i).isStatus()==false)
+		    	 if(driverList.get(i).isStatus()==false) {
 		    		 driverDetails = driverList.get(i).getData();
+		    		 break;
+		    	 }
+		    		 
 		     if(driverDetails=="") 
 		    	 System.out.println("No drivers available at the moment!");
 		     else {
@@ -188,8 +251,16 @@ public class CarRental {
 		    	 System.out.println("Driver : " + driverDetails);
 		         price = (int) (price * distance);
 		         System.out.println("Fare price : Rs" + price);
-		    	 System.out.println("Press 1 to confirm booking or 2 to cancel : ");
-		    	 decision = sc.nextInt();
+		    	 		    	 
+		    	 do {
+		      	    try {
+		      	    	System.out.println("Press 1 to confirm booking or 2 to cancel : ");
+		      	    	decision = sc.nextInt();
+		      	    } catch (InputMismatchException e) {
+		      	        System.out.println("Invalid decision!");
+		      	    }
+		      	    sc.nextLine(); // clears the buffer
+		          } while (decision!=1 && decision!=2);
 		    	 if(decision==1) {
 		    		 System.out.println("Booking confirmed and details sent to " + userList.get(index).getEmailId());
 		    		 driverList.get(i).setStatus(true);
