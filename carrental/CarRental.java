@@ -103,7 +103,6 @@ public class CarRental implements Runnable{
         	    }
         	    sc.nextLine(); // clears the buffer
             } while (choice!=1 && choice!=2);
-            choice = sc.nextShort(); 
         } while(choice==1);  
         sc.close();
     }
